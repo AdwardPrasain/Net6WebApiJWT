@@ -2,7 +2,6 @@
 using MimeKit.Text;
 using MimeKit;
 using Net6WebApiJWT.Models;
-
 using MailKit.Net.Smtp;
 
 namespace Net6WebApiJWT.Services.EmailService
@@ -21,6 +20,9 @@ namespace Net6WebApiJWT.Services.EmailService
             email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
             email.To.Add(MailboxAddress.Parse(request.To));
             email.Subject =request.Subject;
+
+           //email.Body = new TextPart{ Text = request.Body };
+
             email.Body = new TextPart(TextFormat.Html) { Text = request.Body };
 
             using var smtp = new SmtpClient();
@@ -28,7 +30,6 @@ namespace Net6WebApiJWT.Services.EmailService
             smtp.Authenticate(_config.GetSection("EmailUsername").Value, _config.GetSection("EmailPassword").Value);
             smtp.Send(email);
             smtp.Disconnect(true);
-
         }
     }
 }
