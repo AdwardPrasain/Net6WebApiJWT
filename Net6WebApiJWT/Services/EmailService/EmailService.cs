@@ -21,9 +21,9 @@ namespace Net6WebApiJWT.Services.EmailService
             email.To.Add(MailboxAddress.Parse(request.To));
             email.Subject =request.Subject;
 
-           //email.Body = new TextPart{ Text = request.Body };
+           email.Body = new TextPart{ Text = request.Body };
 
-            email.Body = new TextPart(TextFormat.Html) { Text = request.Body };
+            //email.Body = new TextPart(TextFormat.Html) { Text = request.Body };
 
             using var smtp = new SmtpClient();
             smtp.Connect(_config.GetSection("EmailHost").Value, 587, SecureSocketOptions.StartTls);
